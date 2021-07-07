@@ -3,3 +3,18 @@ body {
     color: #fff;
     font-family: 'Noto Sans', sans-serif;
 }
+
+.button2class{
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.button2class:hover, .slide:focus{
+    box-shadow: inset 20em 0 0 0 #8fc866;
+}

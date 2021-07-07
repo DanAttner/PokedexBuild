@@ -1,3 +1,4 @@
+//func that sets up pokemon list
 let pokemonRepository = (function () {
     let pokemonList = [];
   
@@ -8,11 +9,39 @@ let pokemonRepository = (function () {
     function getAll() {
       return pokemonList;
     }
+
+    function addListItem(pokemon) {
+      let pagelist = document.querySelector('.pokemon-page-list');
+      let listItem = document.createElement('li');
+      let button = document.createElement('button');
+      button.innerText = (pokemon.name);
+      button.classList.add("button2class");
+      listItem.appendChild(button);
+      pagelist.appendChild(listItem);
+
+      buttonListener(button,pokemon);
+      
+    }
+
+    function buttonListener(button, pokemon){
+      button.addEventListener('click', function (event) {
+        showDetails(pokemon)
+    })
+  }
+
+    function showDetails(pokemon){
+      console.log(pokemon);
+    }
+
   
     return {
       add: add,
-      getAll: getAll
+      getAll: getAll,
+      addListItem: addListItem,
+      showDetails: showDetails,
+      buttonListener: buttonListener
     };
+
   })();
 
 
@@ -47,7 +76,7 @@ let mewtwo = {
 };
 
 
-//pushing objects to array
+//pushing objects to array. could add another array and loop to streamline the adding process. 
 pokemonRepository.add(bulbasaur);
 pokemonRepository.add(ivysaur);
 pokemonRepository.add(venusaur);
@@ -55,16 +84,20 @@ pokemonRepository.add(mewtwo);
 
 
 
+/* func for writeing to page 
+pokemonRepository.getAll().forEach(function (pokemon){
+  let pagelist = document.querySelector('.pokemon-page-list');
+  let listItem = document.createElement('li');
+  let button = document.createElement('button');
+  button.innerText = (pokemon.name);
+  button.classList.add("button2class");
+  listItem.appendChild(button);
+  pagelist.appendChild(listItem);
+});   
 
-function writeInfo(pokemon) {
-    document.write(pokemon.name + " " + pokemon.height);
+*/ 
 
-    // if height is taller than 1, write something
-    if (pokemon.height > 1){
-        document.write("  - Wow, that is a big pokemon!");
-    }
-    document.write("<br>");
-}
 
 //get the pokemonList and throw it to the writeing function
-pokemonRepository.getAll().forEach(writeInfo);
+pokemonRepository.getAll().forEach(pokemonRepository.addListItem);
+
