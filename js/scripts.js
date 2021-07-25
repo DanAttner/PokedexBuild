@@ -18,7 +18,8 @@ let pokemonRepository = (function () {
       let listItem = document.createElement('li');
       let button = document.createElement('button');
       button.innerText = (pokemon.name);
-      button.classList.add("button2class");
+      $(button).addClass("button2class btn");
+      $(listItem).addClass("list-group-item");
       listItem.appendChild(button);
       pagelist.appendChild(listItem);
 
@@ -98,58 +99,43 @@ let pokemonRepository = (function () {
       loadingMessage = document.querySelector('#loadring');
       let isHidden = loadingMessage.classList.contains('hidden');
       if(!isHidden){
-        loadingMessage.classList.add('hidden');
+        $(loadingMessage).addClass('hidden');
+
       }
 
     }
 
     //show modal by adding .isvisible class
     function showModal(pokemon){
-      let modalContainer = document.querySelector('#modal-container');
-      modalContainer.classList.add('is-visible');
+      let modalContainer = $('#modal-container');
+      $(modalContainer).addClass('is-visible');
 
       modalContainer.innerHTML = '';
 
       //create modal div
-      let modal = document.createElement('div');
-      modal.classList.add('modal');
+
 
       //add hideing functionality
-      window.addEventListener('keydown', (e) =>{
-        let modalContainer = document.querySelector('#modal-container');
-        if (e.key === 'Escape' && modalContainer.classList.contains('is-visible')){
-          hideModal();
-        }
-      });
+  
 
-      modalContainer.addEventListener('click', (e) => {
-        let target = e.target;
-        if (target === modalContainer) {
-          hideModal();
-        }
-      });
 
       // add stuff to modal
-      let closeButtonElement = document.createElement('button');
-      closeButtonElement.classList.add('modal-close');
-      closeButtonElement.innerText = 'X';
-      closeButtonElement.addEventListener('click', hideModal);
 
       let titleElement = document.createElement('h1');
       titleElement.innerText = (pokemon.name);
-      titleElement.classList.add('modal-title');
+  
 
       let pokePic = document.createElement('div');
       pokePic.innerHTML = ("<img src = '" + pokemon.imageUrl + "' />");
-      pokePic.classList.add('modal-pokePic');
+      $(pokePic).addClass('modal-pokePic');
 
       let pokeId = document.createElement('p');
       pokeId.innerText = ("id: " + pokemon.id);
-      pokeId.classList.add('modal-pokeId');
+      $(pokeId).addClass('modal-pokeId');
 
       let pokeHeight = document.createElement('p');
       pokeHeight.innerText = ("height: " + pokemon.height);
-      pokeHeight.classList.add('modal-pokeHeight');
+      $(pokeHeight).addClass('modal-pokeHeight');
 
       //handels possibility for two types
       let pokeType = document.createElement('p');
@@ -159,11 +145,11 @@ let pokemonRepository = (function () {
       else{
         pokeType.innerText = ("type: " + pokemon.type1);
       }
-      pokeType.classList.add('modal-pokeType');
+      $(pokeType).addClass('modal-pokeType');
 
       //arrow buttons
       let arrowright = document.createElement('button');
-      arrowright.classList.add('modal-arrowright');
+      $(arrowright).addClass('modal-arrowright btn');
       arrowright.innerText = 'next';  
       arrowright.addEventListener('click', () => {
         pokePosition = (pokemon.id)
@@ -174,7 +160,7 @@ let pokemonRepository = (function () {
       });
       
       let arrowleft = document.createElement('button');
-      arrowleft.classList.add('modal-arrowleft');
+      $(arrowleft).addClass('modal-arrowleft btn');
       arrowleft.innerText = 'previous';
       arrowleft.addEventListener('click', () => {
         pokePosition = (pokemon.id - 2)
@@ -186,30 +172,36 @@ let pokemonRepository = (function () {
       });
 
       let arrowdiv = document.createElement('div');
-      arrowdiv.classList.add('modal-arrowdiv');
+      $(arrowdiv).addClass('modal-arrowdiv');
 
       let arrowdivright = document.createElement('span');
-      arrowdivright.classList.add('modal-arrow-div-right');
+      $(arrowdivright).addClass('modal-arrow-div-right');
 
       let arrowdivleft = document.createElement('span');
-      arrowdivleft.classList.add('modal-arrow-div-left');
+      $(arrowdivleft).addClass('modal-arrow-div-left');
      
+      let modal = $('.modal');
+      let modalTitle = $('.modal-title');
+      let modalBody = $('.modal-body');
+      let modalFooter = $('.modal-footer');
+    
+      
+      
+      modalTitle.append(titleElement);
+      
+      modalBody.append(arrowdiv);
+      arrowdivleft.append(arrowleft);
+      arrowdivright.append(arrowright);
+      arrowdiv.append(arrowdivright);
+      arrowdiv.append(arrowdivleft);
 
+      modalBody.append(pokePic);
 
-      modal.appendChild(closeButtonElement);
-      modal.appendChild(titleElement);
-      modal.appendChild(pokePic);
+      modalFooter.append(pokeId);
+      modalFooter.append(pokeHeight);
+      modalFooter.append(pokeType);
 
-      modal.appendChild(arrowdiv);
-      arrowdivleft.appendChild(arrowleft);
-      arrowdivright.appendChild(arrowright);
-      arrowdiv.appendChild(arrowdivright);
-      arrowdiv.appendChild(arrowdivleft);
-
-      modal.appendChild(pokeId);
-      modal.appendChild(pokeHeight);
-      modal.appendChild(pokeType);
-      modalContainer.appendChild(modal);
+      modalContainer.append(modal);
 
 
 
